@@ -25,6 +25,7 @@
             text-align: center;
             padding: 100px 20px;
             background: rgba(75, 0, 130, 0.7); /* Semi-transparent background */
+            position: relative;
         }
 
         header h1 {
@@ -48,6 +49,37 @@
 
         .btn:hover {
             background-color: #FF6347;
+        }
+
+        .counter {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.7em; /* Decreased font size */
+}
+
+
+        .green-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: green;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
         }
 
         section {
@@ -88,6 +120,10 @@
 </head>
 <body>
     <header>
+        <div class="counter">
+            <span class="green-dot"></span>
+            Visits Last 7 Days: <span id="visitor-count">50</span>
+        </div>
         <h1>Soul</h1>
         <p>Your free music experience.</p>
         <a href="#download" class="btn">Download APK</a>
@@ -123,5 +159,14 @@
             </p>
         </div>
     </footer>
+
+    <script>
+        // Using CountAPI to track the view count for the last 7 days
+        fetch('https://api.countapi.xyz/hit/soul-connection-vishal/last-7-days')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('visitor-count').textContent = data.value;
+            });
+    </script>
 </body>
 </html>
